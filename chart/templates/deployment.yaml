@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cust-auth-plugin
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: cust-auth-plugin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cust-auth-plugin
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: cust-auth-plugin
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: cust-auth-plugin
+            defaultMode: 420
+      containers:
+        - name: cust-auth-plugin
+          image: {{ .Values.registry }}/cust-auth-plugin:0.0.0-devel
+          ports:
+            - containerPort: 55778
+              protocol: TCP
+          env:
+            - name: XDG_CONFIG_HOME
+              value: /config
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/cust-auth-plugin
+          livenessProbe:
+            exec:
+              command:
+                - /bin/grpc_health_probe
+                - '-addr=:55778'
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 3
+            successThreshold: 1
+            failureThreshold: 3
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 5
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux

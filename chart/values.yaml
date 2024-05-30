@@ -1,0 +1,10 @@
+registry: davidmacpherson
+resources:
+  replicas: 1
+  requests:
+    cpu: 1 
+    memory: 2Gi  
+  limits:
+    cpu: 1
+    memory: 2Gi
+  

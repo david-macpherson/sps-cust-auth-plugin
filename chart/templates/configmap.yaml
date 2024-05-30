@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cust-auth-plugin
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: cust-auth-plugin
+data:
+  config.yaml: |
+    port: 55778
