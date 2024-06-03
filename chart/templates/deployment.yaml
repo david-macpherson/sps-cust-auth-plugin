@@ -40,16 +40,6 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /config/cust-auth-plugin
-          livenessProbe:
-            exec:
-              command:
-                - /bin/grpc_health_probe
-                - '-addr=:55778'
-            initialDelaySeconds: 5
-            timeoutSeconds: 1
-            periodSeconds: 3
-            successThreshold: 1
-            failureThreshold: 3
           imagePullPolicy: Always
       restartPolicy: Always
       terminationGracePeriodSeconds: 5
