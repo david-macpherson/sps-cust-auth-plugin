@@ -7,7 +7,6 @@ import (
 	"net"
 	"sps-cust-auth-plugin/pkg/api/server/defaults"
 
-	"github.com/google/uuid"
 	"github.com/scalablepixelstreaming/apis/pkg/authentication"
 	"google.golang.org/grpc"
 )
@@ -19,14 +18,14 @@ type PluginServer struct {
 
 // Our no-op authentication implementation
 func (server *PluginServer) Authenticate(ctx context.Context, req *authentication.AuthenticationRequest) (*authentication.AuthenticationResponse, error) {
+	log.Default().Println("sending back an error")
 	return &authentication.AuthenticationResponse{
 
 		// Unconditionally authenticate all users
-		Outcome: authentication.AuthenticationResponse_AUTHENTICATED,
-
+		Outcome: authentication.AuthenticationResponse_ERROR,
 		// Just generate a new UUID for the user ID value
-		Payload: &authentication.AuthenticationResponse_Id{
-			Id: uuid.New().String(),
+		Payload: &authentication.AuthenticationResponse_Error{
+			Error: "This is from the custom auth plugin ",
 		},
 	}, nil
 }
