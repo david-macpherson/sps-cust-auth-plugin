@@ -30,6 +30,8 @@ spec:
           env:
             - name: XDG_CONFIG_HOME
               value: /config
+            - name: PORT
+              value: "55771"
           resources:
             limits:
               cpu: {{ .Values.resources.limits.cpu }}

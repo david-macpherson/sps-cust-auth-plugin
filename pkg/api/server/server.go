@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"sps-cust-auth-plugin/pkg/api/server/defaults"
 
 	"github.com/scalablepixelstreaming/apis/pkg/authentication"
 	"google.golang.org/grpc"
@@ -30,10 +29,10 @@ func (server *PluginServer) Authenticate(ctx context.Context, req *authenticatio
 	}, nil
 }
 
-func Start() {
+func Start(listeningPort int) {
 
 	// Attempt to listen on the default port number for Authentication Plugins
-	sock, err := net.Listen("tcp", fmt.Sprintf(":%d", defaults.AUTHENTICATION_PLUGIN_PORT))
+	sock, err := net.Listen("tcp", fmt.Sprintf(":%d", listeningPort))
 	if err != nil {
 		log.Default().Fatal(err.Error())
 	}

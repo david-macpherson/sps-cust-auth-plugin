@@ -1,5 +1,5 @@
 package defaults
 
 const (
-	AUTHENTICATION_PLUGIN_PORT = 55778
+	AUTHENTICATION_PLUGIN_PORT = "55778"
 )
