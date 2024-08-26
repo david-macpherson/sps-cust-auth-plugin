@@ -7,4 +7,4 @@ metadata:
     app.kubernetes.io/name: cust-auth-plugin
 data:
   config.yaml: |
-    port: 55778
+    port: 55771

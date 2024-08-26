@@ -24,9 +24,6 @@ spec:
       containers:
         - name: cust-auth-plugin
           image: {{ .Values.registry }}/cust-auth-plugin:0.0.0-devel
-          ports:
-            - containerPort: 55778
-              protocol: TCP
           env:
             - name: XDG_CONFIG_HOME
               value: /config

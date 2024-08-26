@@ -10,5 +10,5 @@ spec:
     app.kubernetes.io/name: cust-auth-plugin
   ports:
     - protocol: TCP
-      port: 55778
-      targetPort: 55778
+      port: 55771
+      targetPort: 55771
